@@ -35,7 +35,7 @@ class CalendarsController < ApplicationController
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
       wday_num = ( @todays_date.wday + x ) % 7                  # 日曜日を0とした際の曜日の数を算出する。7以上になった際にループできるようにあまりを使用
-      days = { :month => (@todays_date + x).month, :date => (@todays_date+x).day, :plans => today_plans, wday: wdays[wday_num] }  # 曜日を追加
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: wdays[wday_num] }  # 曜日を追加
       @week_days.push(days)
     end
 
