@@ -15,7 +15,7 @@ class CalendarsController < ApplicationController
   private
 
   def plan_params
-    params.require(:calendars).permit(:date, :plan)
+    params.require(:plan).permit(:date, :plan)                # Calenderモデルは存在しない、Planモデルに入力したいので、requireの引数変更
   end
 
   def get_week
@@ -34,7 +34,8 @@ class CalendarsController < ApplicationController
       plan = plans.map do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans}
+      wday_num = ( @todays_date.wday + x ) % 7                  # 日曜日を0とした際の曜日の数を算出する。7以上になった際にループできるようにあまりを使用
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: wdays[wday_num] }  # 曜日を追加
       @week_days.push(days)
     end
 
